@@ -4,27 +4,37 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Merchant {
-	public int addBus(String n1,String busname,String[] stops,String arr_time,String dept_time,int seats,int fare,String type,String ac_nonac)
+
+	public int addBus(String n1,String busname,String type,String ac_nonac,int fare,int seats) throws SQLException
 	{
+		Merchant m=new Merchant();
 		int r1;
+		String[] condition=new String[13];
+		String[] value=new String[13];
+		int result=0;
 		Row row=new Row();
 		row.setTableName("bus");
 		row.addColumn(new Column("busname", busname));
 		row.addColumn(new Column("name", n1));
-		row.addColumn(new Column("stop1", stops[0]));
-		row.addColumn(new Column("stop2", stops[1]));
-		row.addColumn(new Column("stop3", stops[2]));
-		row.addColumn(new Column("stop4", stops[3]));
-		row.addColumn(new Column("stop5", stops[4]));
-		row.addColumn(new Column("arrival", arr_time));
-		row.addColumn(new Column("departure", dept_time));
-		row.addColumn(new Column("seats", seats));
-		row.addColumn(new Column("fare", fare));
 		row.addColumn(new Column("type", type));
 		row.addColumn(new Column("ac_nonac", ac_nonac));
-
+		row.addColumn(new Column("fare", fare));
+		row.addColumn(new Column("seats",seats));
+		condition[0]="name";
+		condition[1]="busname";
+		value[0]=n1;
+		value[1]=busname;
 		r1=new DbConnectivity().insertRow(row);
-		return r1;
+		ResultSet rs1 = null;
+		if(r1>0)
+		{
+			rs1=m.displayBuses(condition,value);
+		}
+		while(rs1.next()) {
+			result=rs1.getInt("busid");
+
+		}
+		return result;
 	}
 
 	public int updateBusDetails(String n1,String busname,String[] columnname,String[] value,int len)
@@ -74,7 +84,7 @@ public class Merchant {
 		ResultSet rs=new DbConnectivity().select(table,column,c);
 		while(rs.next()) {
 			result=rs.getString("name");
-			
+
 		}
 		if(result.equals(value[0]))
 		{

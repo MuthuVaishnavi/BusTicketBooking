@@ -15,7 +15,7 @@ public class Customer {
 		ResultSet rs=new DbConnectivity().select(table,column,c);
 		while(rs.next()) {
 			result=rs.getString("name");
-			
+
 		}
 		if(result.equals(value[0]))
 		{
@@ -60,7 +60,7 @@ public class Customer {
 		row2.addColumn(new Column("seats", result));
 		int s=new DbConnectivity().update(row1,row2);
 		return s;
-		
+
 	}
 
 }
