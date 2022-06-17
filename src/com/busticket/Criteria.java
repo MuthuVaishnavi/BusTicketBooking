@@ -5,6 +5,7 @@ public class Criteria {
 String[] condition=new String[10];
 String[] value=new String[10];
 
+
 public String[] getCondition() {
 	return condition;
 }

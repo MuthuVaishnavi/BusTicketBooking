@@ -154,34 +154,59 @@ public class UiPage {
 	public void displayBus(String person) throws SQLException
 	{
 		int len=0;
-		ResultSet rs;
-		String[] condition=new String[13];
+		ResultSet rs=null;
+
 		String[] value=new String[13];
-		String[] columnname= {"name","busname","seats","fare","type","ac_nonac"};
-		System.out.println("Enter the number of conditions\n");
-		len=input.nextInt();
-		for(int i=0;i<len;i++)
+		String[] condition1=new String[13];
+		String[] value1=new String[13];
+		String[] columnname= {"name","busname","seats","fare","type","ac_nonac","stop","stopno","timedata"};
+		String[] col= {"stop","stopno","timedata"};
+		String[] condition= {"type","ac_nonac","fare"};
+		
+		
+		condition1[0]="stop";
+		condition1[1]="stop";
+		
+		System.out.println("Enter the source");
+		value1[0]=input.next();
+		System.out.println("Enter the destination");
+		value1[1]=input.next();
+		
+		System.out.println("Do you want to add any additional condition\n If not, Enter n");
+		for(int i=0;i<3;i++)
 		{
-			System.out.println("Enter the condition\n");
-			condition[i]=input.next();
-			System.out.println("Enter the value\n");
-			value[i]=input.next();
+		System.out.println(condition[i]);
+		value[i]=input.next();
 		}
+		
+		
+		
 		if(person.equals("merchant"))
 		{rs=merchant.displayBuses(condition,value);}
 		else
 		{
-			rs=customer.displayBuses(condition,value);	
+			rs=customer.displayBuses(condition,value,condition1,value1);	
 		}
-
+ 
+		
 		while(rs.next())
 		{
-			for(int k=0;k<6;k++)
+			for(int k=0;k<9;k++)
 			{
 				System.out.println(columnname[k]+":");
 				System.out.println(rs.getObject(columnname[k])+"\n");
 			}
+			break;
 		}
+		while(rs.next())
+		{
+			for(int k=0;k<3;k++)
+			{
+				System.out.println(col[k]+":");
+				System.out.println(rs.getObject(col[k])+"\n");
+			}
+		}
+		
 
 	}
 	public int toCheckMerchant(String n1) throws SQLException

@@ -44,7 +44,7 @@ public class DbConnectivity {
 			{
 				statement.setObject(i+1, row.columns.get(i).getValue());	
 			}
-			System.out.println(statement);
+			//System.out.println(statement);
 			r=statement.executeUpdate();
 			connection.close();
 		}
@@ -66,7 +66,7 @@ public class DbConnectivity {
 		try
 		{
 			Connection connection=DriverManager.getConnection(jdbcURL,username,password1);
-			System.out.println("Connection Established");
+			//System.out.println("Connection Established");
 			//String sql1="select "+row.getVariable()+" from " +row.getTableName()+" where "+(String) row.columns.get(0).getColumnName()+"=?";
 			//String sql1="select "+row.getVariable()+" from " +row.getTableName()+" where "+(String) row.columns.get(0).getColumnName()+"=?";
 			//len=row.columns.size();
@@ -86,28 +86,47 @@ public class DbConnectivity {
 					len++;
 				}
 			}
-			for (int i = 0; i < 13; i++) {
+			
+			for (int i = 0; i < c.condition.length; i++) {
 				if (c.condition[i] != null) {
 					len1++;
 				}
 			}
+			/*System.out.println(len1);
+			System.out.println(c.condition.length);
+			for(int i=0;i<c.condition.length;i++)
+			{
+				if (c.value[i] != null) {
+					System.out.println(c.value[i]);
+				}
+			}*/
 
 
 			for(int i=1;i<len;i++)
 			{
 				sql1=sql1+" ,"+columns[i];
 			}
-			sql1=sql1+" from "+table+" where "+c.condition[0]+"=?";
+			sql1=sql1+" from "+table;
+			//System.out.println(len1);
+			
+			if(len1!=0)
+			{sql1=sql1+" where "+c.condition[0]+"=?";}
+			
 			for(int i=1;i<len1;i++)
 			{
-				sql1=sql1+" and "+c.condition[i]+"=?";
+				if(c.condition[i].equals("fare between 0 and")||c.condition[i].equals("seats !"))
+				{
+				sql1=sql1+" and "+c.condition[i]+"?";	
+				}
+				else
+				{sql1=sql1+" and "+c.condition[i]+"=?";}
 			}
-			System.out.println(sql1);
+			//System.out.println(sql1);
 			PreparedStatement statement=connection.prepareStatement(sql1);
 			
 			for(int i=0;i<len1;i++)
 			{
-				if(c.condition[i].equals("fare")||c.condition[i].equals("seats"))
+				if(c.condition[i].equals("fare between 0 and ")||c.condition[i].equals("seats !")||c.condition[i].equals("bus.busid")||c.condition[i].equals("busid"))
 				{
 					int value1=Integer.parseInt(c.value[i]);
 					statement.setObject(i+1, value1);
