@@ -50,4 +50,18 @@ public class Bus {
 		return r1;
 	}
 
+	public ResultSet displayReview(String busname)
+	{
+		String table="reviewtable";
+		String[] column=new String[5];
+		column[0]="*";
+		String[] condition= {"busname"};
+		String[] value= {busname};
+		Criteria c=new Criteria();
+		c.setCondition(condition);
+		c.setValue(value);
+		ResultSet rs=new DbConnectivity().select(table,column,c);
+		return rs;
+	}
+
 }

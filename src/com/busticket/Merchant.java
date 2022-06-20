@@ -93,5 +93,25 @@ public class Merchant {
 		return -1;
 	}
 
+	public int calculateProfit(String name,String busname) throws SQLException
+	{
+		int total=0;
+		String table="ticketdetails";
+		String[] column=new String[5];
+		column[0]="*";
+		String[] condition= {"vendor","busname"};
+		String[] value= {name,busname};
+		Criteria c=new Criteria();
+		c.setCondition(condition);
+		c.setValue(value);
+		ResultSet rs=new DbConnectivity().select(table,column,c);
+		while(rs.next())
+		{
+			total=total+(int)rs.getObject("fare");
+		}
+		return total;
+
+	}
+
 }
 

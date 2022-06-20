@@ -24,7 +24,7 @@ public class User {
 		s=new DbConnectivity().select(row1);
 		int f=PwdCompare.Compare(s,p1);
 		return f;*/
-		
+
 		String table="accounts",result=null;
 		String[] column=new String[5];
 		column[0]="name";
@@ -51,7 +51,7 @@ public class User {
 		{
 			return 0;
 		}
-		
+
 	}
 	public int Update(String n1,String p1,String p2)
 	{
@@ -63,27 +63,27 @@ public class User {
 		row2.addColumn(new Column("password", p2));
 		int s=new DbConnectivity().update(row1,row2);
 		return s;
-		
+
 	}
-  public int detail(String name1,int ag,String gen,String emailid,String phoneno,int identity)
-  {
-	  Row row=new Row();
-	  if(identity==1)
-	  {
-	  row.setTableName("merchant");
-	  }
-	  else if(identity==2)
-	  {
-		  row.setTableName("customer");
-	  }
-	  row.addColumn(new Column("name", name1));
-	  row.addColumn(new Column("age", ag));
-	  row.addColumn(new Column("gender", gen));
-	  row.addColumn(new Column("email", emailid));
-	  row.addColumn(new Column("phone", phoneno));
-	  int s=new DbConnectivity().insertRow(row);
-	  return s;
-	  
-  }
+	public int detail(String name1,int ag,String gen,String emailid,String phoneno,int identity)
+	{
+		Row row=new Row();
+		if(identity==1)
+		{
+			row.setTableName("merchant");
+		}
+		else if(identity==2)
+		{
+			row.setTableName("customer");
+		}
+		row.addColumn(new Column("name", name1));
+		row.addColumn(new Column("age", ag));
+		row.addColumn(new Column("gender", gen));
+		row.addColumn(new Column("email", emailid));
+		row.addColumn(new Column("phone", phoneno));
+		int s=new DbConnectivity().insertRow(row);
+		return s;
+
+	}
 
 }

@@ -5,8 +5,9 @@ import java.sql.*;
 import java.text.ParseException;
 
 public class UiPage {
-	String name1,pwd,newpwd,gen,emailid,phoneno,arr_time,dept_time,type,ac_nonac,busname;
+	String name1,pwd,newpwd,gen,emailid,phoneno,arr_time,dept_time,type,ac_nonac,busname,source,dest,message;
 	Scanner input= new Scanner(System.in);
+	Scanner input1= new Scanner(System.in);
 	String ans[]=new String[50];
 	User user=new User();
 	int flag=0,ag=0,identity=0,fare=0,seats=0,tickets=0,len=0;
@@ -151,10 +152,10 @@ public class UiPage {
 		}
 
 	}
-	public void displayBus(String person) throws SQLException
+	public void displayBus() throws SQLException
 	{
 		int len=0;
-		ResultSet rs=null;
+		ResultSet rs1[]=new ResultSet[10];
 
 		String[] value=new String[13];
 		String[] condition1=new String[13];
@@ -162,51 +163,70 @@ public class UiPage {
 		String[] columnname= {"name","busname","seats","fare","type","ac_nonac","stop","stopno","timedata"};
 		String[] col= {"stop","stopno","timedata"};
 		String[] condition= {"type","ac_nonac","fare"};
-		
-		
+
+
 		condition1[0]="stop";
 		condition1[1]="stop";
-		
+
 		System.out.println("Enter the source");
 		value1[0]=input.next();
 		System.out.println("Enter the destination");
 		value1[1]=input.next();
-		
+
 		System.out.println("Do you want to add any additional condition\n If not, Enter n");
 		for(int i=0;i<3;i++)
 		{
-		System.out.println(condition[i]);
-		value[i]=input.next();
+			System.out.println(condition[i]);
+			value[i]=input.next();
 		}
-		
-		
-		
-		if(person.equals("merchant"))
-		{rs=merchant.displayBuses(condition,value);}
+
+		rs1=customer.displayBuses(condition,value,condition1,value1);	
+
+		/*if(person.equals("merchant"))
+		{
+			//rs=merchant.displayBuses(condition,value);
+
+		}
+		}
 		else
 		{
-			rs=customer.displayBuses(condition,value,condition1,value1);	
+			rs1=customer.displayBuses(condition,value,condition1,value1);	
 		}
- 
-		
-		while(rs.next())
+		 */
+
+		for(int i=0;i<10;i++)
 		{
-			for(int k=0;k<9;k++)
+			if(rs1[i]!=null)
 			{
-				System.out.println(columnname[k]+":");
-				System.out.println(rs.getObject(columnname[k])+"\n");
+				len++;
 			}
-			break;
+
 		}
-		while(rs.next())
+		System.out.println(len);
+
+		for(int i=1;i<=len;i++)
+		{
+			while(rs1[i].next())
+			{
+				for(int k=0;k<9;k++)
+				{
+					System.out.println(columnname[k]+":");
+					System.out.println(rs1[i].getObject(columnname[k])+"\n");
+				}
+			}
+		}
+		/*while(rs1[i].next())
 		{
 			for(int k=0;k<3;k++)
 			{
 				System.out.println(col[k]+":");
 				System.out.println(rs.getObject(col[k])+"\n");
 			}
-		}
-		
+		}*/
+
+
+
+
 
 	}
 	public int toCheckMerchant(String n1) throws SQLException
@@ -229,16 +249,21 @@ public class UiPage {
 
 	}
 
-	public void ticketDetails() throws SQLException
+	public void ticketDetails(String n) throws SQLException
 	{
+
 		System.out.println("Enter the bus name");
 		busname=input.next();
+		System.out.println("Enter the soure");
+		source=input.next();
+		System.out.println("Enter the destination");
+		dest=input.next();
 		System.out.println("Enter the number of tickets");
 		tickets=input.nextInt();
-		flag=customer.bookTicket(busname,tickets);
+		flag=customer.bookTicket(busname,tickets,source,dest,n);
 		if(flag>0)
 		{
-			System.out.println(tickets+" tickets Booked Successfully");
+			System.out.println(tickets+" tickets Booked Successfully and your total amount is "+flag);
 		}
 		else
 		{
@@ -268,8 +293,57 @@ public class UiPage {
 		return flag;
 
 	}
+	public void showTicket(String n) throws SQLException
+	{
+		ResultSet rs=customer.showBookedTickets(n);
+		while(rs.next())
+		{
+			System.out.println("Busname :");
+			System.out.println(rs.getObject("busname"));
+			System.out.println("From :");
+			System.out.println(rs.getObject("source"));
+			System.out.println("To :");
+			System.out.println(rs.getObject("destination"));
+			System.out.println("Tickets :");
+			System.out.println(rs.getObject("ticket_count"));
+			System.out.println("Total amount :");
+			System.out.println(rs.getObject("fare"));
 
+		}
+	}
 
+	public void showProfit(String n) throws SQLException
+	{
+		System.out.println("Enter the busname");
+		busname=input.next();
+		int amt=merchant.calculateProfit(n,busname);
+		System.out.println("Your total profit is Rs."+amt);
+	}
+
+	public void postReview(String name)
+	{
+		System.out.println("Enter the busname");
+		busname=input.next();
+		System.out.println("Post your review :");
+		message=input1.nextLine();
+
+		int res=customer.Review(name,busname,message);
+		if(res>1)
+		{
+			System.out.println("Your review is posted successfully!!");
+		}
+
+	}
+
+	public void showReview() throws SQLException
+	{
+		System.out.println("Enter the bus name\n");
+		busname=input.next();
+		ResultSet rs=bus.displayReview(busname);
+		while(rs.next())
+		{System.out.println(rs.getObject("review"));}
+
+	}
 
 
 
@@ -306,7 +380,7 @@ public class UiPage {
 					{confirm2=ui.toCheckCustomer(ui.name1);}
 					if(ui.identity==1&&confirm1>0)
 					{
-						System.out.println("Please Enter the option\n 1.Add Bus\n 2.Update Bus detail\n 3.Show list of bus\n 4.Add Bus stoppings");
+						System.out.println("Please Enter the option\n 1.Add Bus\n 2.Update Bus detail\n 3.Show list of bus\n 4.Show Profit\n 5.Check Review");
 						option=in.nextInt();
 						if(option==1)
 						{
@@ -319,14 +393,15 @@ public class UiPage {
 						}
 						else if(option==3)
 						{
-							ui.displayBus("merchant");
+							ui.displayBus();
 						}
 						else if(option==4)
 						{
-							System.out.println("Enter the busname\n");
-							b=in.next();
-							f=ui.getId(ui.name1,b);
-							ui.addBusStops(f);
+							ui.showProfit(ui.name1);
+						}
+						else if(option==5)
+						{
+							ui.showReview();
 						}
 					}
 					else if(ui.identity==1&&confirm1<0)
@@ -335,15 +410,23 @@ public class UiPage {
 					}
 					else if(ui.identity==2&&confirm2>0)
 					{
-						System.out.println("Please Enter the option\n 1.Show Buses\n 2.Book tickets");
+						System.out.println("Please Enter the option\n 1.Show Buses\n 2.Book tickets\n 3.Show ticket details\n 4.Post your review\n 5.Show Review");
 						option=in.nextInt();
 						if(option==1)
 						{
-							ui.displayBus("customer");
+							ui.displayBus();
 						}
 						else if(option==2) 
 						{
-							ui.ticketDetails();	
+							ui.ticketDetails(ui.name1);	
+						}
+						else if(option==3)
+						{
+							ui.showTicket(ui.name1);
+						}
+						else if(option==4)
+						{
+							ui.postReview(ui.name1);
 						}
 					}
 					else if(ui.identity==2&&confirm2<0)

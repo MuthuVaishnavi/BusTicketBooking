@@ -86,7 +86,7 @@ public class DbConnectivity {
 					len++;
 				}
 			}
-			
+
 			for (int i = 0; i < c.condition.length; i++) {
 				if (c.condition[i] != null) {
 					len1++;
@@ -108,36 +108,42 @@ public class DbConnectivity {
 			}
 			sql1=sql1+" from "+table;
 			//System.out.println(len1);
-			
+
 			if(len1!=0)
 			{sql1=sql1+" where "+c.condition[0]+"=?";}
-			
+
 			for(int i=1;i<len1;i++)
 			{
-				if(c.condition[i].equals("fare between 0 and")||c.condition[i].equals("seats !"))
+				if(c.condition[i]!=null)
 				{
-				sql1=sql1+" and "+c.condition[i]+"?";	
+					if(c.condition[i].equals("bus.fare between 0 and ")||c.condition[i].equals("bus.seats !="))
+					{
+						sql1=sql1+" and "+c.condition[i]+"?";	
+					}
+					else
+					{sql1=sql1+" and "+c.condition[i]+"=?";}
 				}
-				else
-				{sql1=sql1+" and "+c.condition[i]+"=?";}
 			}
-			//System.out.println(sql1);
+			System.out.println(sql1);
 			PreparedStatement statement=connection.prepareStatement(sql1);
-			
+
 			for(int i=0;i<len1;i++)
 			{
-				if(c.condition[i].equals("fare between 0 and ")||c.condition[i].equals("seats !")||c.condition[i].equals("bus.busid")||c.condition[i].equals("busid"))
+				if(c.value[i]!=null)
 				{
-					int value1=Integer.parseInt(c.value[i]);
-					statement.setObject(i+1, value1);
+					if(c.condition[i].equals("bus.fare between 0 and ")||c.condition[i].equals("bus.seats !=")||c.condition[i].equals("bus.busid")||c.condition[i].equals("busid"))
+					{
+						int value1=Integer.parseInt(c.value[i]);
+						statement.setObject(i+1, value1);
+					}
+					else 
+					{
+						String value1=c.value[i];
+						statement.setObject(i+1, value1);
+					}
+
+
 				}
-				else 
-				{
-					String value1=c.value[i];
-					statement.setObject(i+1, value1);
-				}
-				
-				
 			}
 
 			System.out.println(statement);
