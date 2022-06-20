@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class Bus {
-	public void addStops(int busid,int len,String[] stops,String[] time) throws ParseException
+	public void addStops(int busid,int len,String[] stops,String[] time) throws ParseException, SQLException
 	{
 		int r1=0;
 		Time timeValue;
@@ -50,7 +50,7 @@ public class Bus {
 		return r1;
 	}
 
-	public ResultSet displayReview(String busname)
+	public ResultSet displayReview(String busname) throws SQLException
 	{
 		String table="reviewtable";
 		String[] column=new String[5];

@@ -76,7 +76,7 @@ public class Customer {
 		return rs1;
 	}
 
-	private ResultSet disp(int i,String[] condition,String[] value) {
+	private ResultSet disp(int i,String[] condition,String[] value) throws SQLException {
 		String table="bus inner join busdetails on bus.busid=busdetails.busid ";
 		String[] column=new String[5];
 		int len1=0;
@@ -238,7 +238,7 @@ public class Customer {
 
 	}
 
-	public ResultSet showBookedTickets(String name)
+	public ResultSet showBookedTickets(String name) throws SQLException
 	{
 		String table="ticketdetails";
 		String[] column=new String[5];
@@ -252,7 +252,7 @@ public class Customer {
 		return rs;
 	}
 
-	public int Review(String name,String busname,String message)
+	public int Review(String name,String busname,String message) throws SQLException
 	{
 		int r1;
 		Row row=new Row();

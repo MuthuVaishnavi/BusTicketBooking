@@ -10,14 +10,15 @@ import java.util.ArrayList;
 
 public class DbConnectivity {
 
-	public int insertRow(Row row) {
+	public int insertRow(Row row) throws SQLException {
 		String jdbcURL="jdbc:postgresql://localhost:5432/busticketbooking";
 		String username="postgres";
 		String password1="Vaishu123*";
 		int r=0,len=0;
+		Connection connection = null;
 		try
 		{
-			Connection connection=DriverManager.getConnection(jdbcURL,username,password1);
+			connection=DriverManager.getConnection(jdbcURL,username,password1);
 			System.out.println("Connection Established");
 			//String sql="insert into "+row.getTableName() +"("+row.columns.get(0).getColumnName()+","+row.columns.get(1).getColumnName()+")"+"values(?,?)";
 			String sql1="insert into "+row.getTableName()+"("+row.columns.get(0).getColumnName();
@@ -46,16 +47,20 @@ public class DbConnectivity {
 			}
 			//System.out.println(statement);
 			r=statement.executeUpdate();
-			connection.close();
+			
 		}
 		catch(SQLException e)
 		{
 			e.printStackTrace();	
 		}
+		finally
+		{
+			connection.close();
+		}
 		return r;
 
 	}
-	public ResultSet select(String table, String[] columns, Criteria c)
+	public ResultSet select(String table, String[] columns, Criteria c) throws SQLException
 	{
 		String jdbcURL="jdbc:postgresql://localhost:5432/busticketbooking";
 		String username="postgres";
@@ -63,9 +68,10 @@ public class DbConnectivity {
 		String result=null;
 		int len=0,len1=0;
 		ResultSet rs=null;
+		Connection connection=null;
 		try
 		{
-			Connection connection=DriverManager.getConnection(jdbcURL,username,password1);
+		    connection=DriverManager.getConnection(jdbcURL,username,password1);
 			//System.out.println("Connection Established");
 			//String sql1="select "+row.getVariable()+" from " +row.getTableName()+" where "+(String) row.columns.get(0).getColumnName()+"=?";
 			//String sql1="select "+row.getVariable()+" from " +row.getTableName()+" where "+(String) row.columns.get(0).getColumnName()+"=?";
@@ -149,15 +155,19 @@ public class DbConnectivity {
 			System.out.println(statement);
 			rs =statement.executeQuery();
 
-			connection.close();
+			
 		}
 		catch(SQLException e)
 		{
 			e.printStackTrace();	
 		}
+		finally
+		{
+			connection.close();
+		}
 		return rs;
 	}
-	public int update(Row old,Row change)
+	public int update(Row old,Row change) throws SQLException
 	{
 		String jdbcURL="jdbc:postgresql://localhost:5432/busticketbooking";
 		String username="postgres";
@@ -165,9 +175,10 @@ public class DbConnectivity {
 		int len1,len2,r=0;
 		len1=old.columns.size();
 		len2=change.columns.size();
+		Connection connection=null;
 		try
 		{
-			Connection connection=DriverManager.getConnection(jdbcURL,username,password1);
+			connection=DriverManager.getConnection(jdbcURL,username,password1);
 			System.out.println("Connection Established");
 			String sql="update "+old.getTableName()+" set "+(String) change.columns.get(0).getColumnName()+"=?";
 			for(int i=1;i<len2;i++)
@@ -196,14 +207,14 @@ public class DbConnectivity {
 
 			System.out.println(statement);
 			r=statement.executeUpdate();
-			connection.close();
-
-
-
 		}
 		catch(SQLException e)
 		{
 			e.printStackTrace();	
+		}
+		finally
+		{
+			connection.close();
 		}
 		return r;
 	}

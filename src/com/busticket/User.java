@@ -3,7 +3,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class User {
-	public int SignUp(String n1,String p1)
+	public int SignUp(String n1,String p1) throws SQLException
 	{
 		int r1;
 		Row row=new Row();
@@ -53,7 +53,7 @@ public class User {
 		}
 
 	}
-	public int Update(String n1,String p1,String p2)
+	public int Update(String n1,String p1,String p2) throws SQLException
 	{
 		Row row1=new Row();
 		Row row2=new Row();
@@ -65,7 +65,7 @@ public class User {
 		return s;
 
 	}
-	public int detail(String name1,int ag,String gen,String emailid,String phoneno,int identity)
+	public int detail(String name1,int ag,String gen,String emailid,String phoneno,int identity) throws SQLException
 	{
 		Row row=new Row();
 		if(identity==1)

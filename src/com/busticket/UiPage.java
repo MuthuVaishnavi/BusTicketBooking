@@ -16,7 +16,7 @@ public class UiPage {
 	Customer customer=new Customer();
 	Bus bus=new Bus();
 
-	public void getDetails() 
+	public void getDetails() throws SQLException 
 	{
 		System.out.println("Please Enter your details\n");
 		System.out.println("Enter your name\n");
@@ -44,7 +44,7 @@ public class UiPage {
 		return flag;
 
 	}
-	public void updateData()
+	public void updateData() throws SQLException
 	{
 		System.out.println("Enter username");
 		name1=input.next();
@@ -62,7 +62,7 @@ public class UiPage {
 			System.out.println("Please enter the correct details");
 		}
 	}
-	public void additionalData(String n1)
+	public void additionalData(String n1) throws SQLException
 	{
 		System.out.println("Welcome!! Please fill the following details!\n");
 		System.out.println("Please enter\n 1.Merchant\n 2.Customer");
@@ -125,7 +125,7 @@ public class UiPage {
 		return flag;
 
 	}
-	public void updateBus(String n1)
+	public void updateBus(String n1) throws SQLException
 	{
 		int len=0;
 		String[] value=new String[13];
@@ -271,7 +271,7 @@ public class UiPage {
 		}
 
 	}
-	public void addBusStops(int id) throws ParseException
+	public void addBusStops(int id) throws ParseException, SQLException
 	{
 		String[] stops=new String[15];
 		String[] time=new String[15];
@@ -320,7 +320,7 @@ public class UiPage {
 		System.out.println("Your total profit is Rs."+amt);
 	}
 
-	public void postReview(String name)
+	public void postReview(String name) throws SQLException
 	{
 		System.out.println("Enter the busname");
 		busname=input.next();

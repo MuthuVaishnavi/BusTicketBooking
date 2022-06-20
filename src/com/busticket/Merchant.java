@@ -37,7 +37,7 @@ public class Merchant {
 		return result;
 	}
 
-	public int updateBusDetails(String n1,String busname,String[] columnname,String[] value,int len)
+	public int updateBusDetails(String n1,String busname,String[] columnname,String[] value,int len) throws SQLException
 	{
 		Row row1=new Row();
 		Row row2=new Row();
