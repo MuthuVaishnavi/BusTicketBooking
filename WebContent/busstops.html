@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Bus Stops</title>
+</head>
+<body>
+<p>Stops</p>
+<form id="form1">
+<input type="number" id="stops" name="stops"><br>
+<button type="button" id="button1">Add</button>
+<input type="submit" value="submit">
+</form>
+<div id="label-container"></div>
+<ul id="input-container">
+</ul>
+<form >
+<script>
+let form = document.getElementById("form1");
+let button = document.getElementById("button1");
+button.addEventListener("click", function(event) {
+    event.preventDefault(); 
+    let stop= document.getElementById("stops").value;
+    generateInputs(stop);
+    console.log("hello", stop);
+});
+let container = document.getElementById("input-container");
+let label = document.getElementById("label-container");
+function generateInputs(num) {
+	let list = document.createElement("li");
+	list.style ="list-style: none;"
+	let div = document.createElement("div");
+	let l1 = document.createElement("span");
+	let l2 = document.createElement("span");
+	l1.style="margin-right: 135px;"
+	l1.innerHTML = 'Bus Stop';
+	l2.innerHTML = 'Time';
+	div.appendChild(l1);
+	div.appendChild(l2);
+	list.appendChild(div);
+    container.appendChild(list);
+  for (let i = 0; i < num; i++) {
+	let list = document.createElement("li");
+	let div = document.createElement("div");
+    let input1 = document.createElement("input");
+    let input2 = document.createElement("input");
+    input1.setAttribute("type", "text");
+    input1.setAttribute("name", "input1" + (i + 1));
+    input2.setAttribute("type", "text");
+    input2.setAttribute("name", "input2" + (i + 1));
+    div.appendChild(input1);
+    div.appendChild(input2);
+    list.appendChild(div);
+    container.appendChild(list);
+  }
+}
+</script>
+<input type="submit" value="click">
+</form>
+</body>
+</html>

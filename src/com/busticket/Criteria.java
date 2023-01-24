@@ -12,7 +12,7 @@ public class Criteria {
 	public void setCondition(String[] condition) {
 		this.condition = condition;
 	}
-	public String[] getValue() {
+	public Object[] getValue() {
 		return value;
 	}
 	public void setValue(String[] value) {

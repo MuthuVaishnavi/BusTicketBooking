@@ -23,9 +23,10 @@ public class UiPage {
 		name1=input.next();
 		System.out.println("Enter the password\n");
 		pwd=input.next();
-		flag=user.SignUp(name1, pwd);
+		//flag=user.SignUp(name1, pwd);
 		if(flag>0)
-		{System.out.println("Your account is successfully created\n");}
+		{
+			System.out.println("Your account is successfully created\n");}
 
 	}
 	public int fetchDetails() throws SQLException {
@@ -34,7 +35,7 @@ public class UiPage {
 		System.out.println("Password\n");
 		pwd = input.next();
 
-		flag= user.SignIn(name1, pwd);
+		//flag= user.SignIn(name1, pwd);
 
 		if (flag > 0) {
 			System.out.println("Login Successful");
@@ -52,7 +53,7 @@ public class UiPage {
 		pwd=input.next();
 		System.out.println("Enter new password");
 		newpwd=input.next();
-		flag=user.Update(name1,pwd,newpwd);
+		//flag=user.Update(name1,pwd,newpwd);
 		if(flag>0)
 		{
 			System.out.println("Updated Successfully");
@@ -75,7 +76,7 @@ public class UiPage {
 		emailid=input.next();
 		System.out.println("Phone number\n");
 		phoneno=input.next();
-		flag=user.detail(n1,ag,gen,emailid,phoneno,identity);	
+		//flag=user.detail(n1,ag,gen,emailid,phoneno,identity);	
 		if(flag>0)
 		{
 			System.out.println("Details added successfully\n");
@@ -113,7 +114,7 @@ public class UiPage {
 		System.out.println("Fare of the journey\n");
 		fare=input.nextInt();
 
-		flag=merchant.addBus(n1,busname,type,ac_nonac,fare,seats);
+		//flag=merchant.addBus(n1,busname,type,ac_nonac,fare,seats);
 		if(flag>0)
 		{
 			System.out.println("Inserted Successfully");
@@ -229,13 +230,13 @@ public class UiPage {
 
 
 	}
-	public int toCheckMerchant(String n1) throws SQLException
+	public void toCheckMerchant(String n1) throws SQLException
 	{
 		String[] condition=new String[13];
 		String[] value=new String[13];
 		condition[0]="name";
 		value[0]=n1;
-		return flag=merchant.check(condition,value);
+		//return flag=merchant.check(condition,value);
 
 	}
 
@@ -375,7 +376,8 @@ public class UiPage {
 					System.out.println("1.Merchant\n2.Customer\n");
 					ui.identity=in.nextInt();
 					if(ui.identity==1)
-					{confirm1=ui.toCheckMerchant(ui.name1);}
+					{//confirm1=ui.toCheckMerchant(ui.name1);
+					}
 					else
 					{confirm2=ui.toCheckCustomer(ui.name1);}
 					if(ui.identity==1&&confirm1>0)

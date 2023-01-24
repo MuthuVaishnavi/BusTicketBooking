@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>BusTicket</display-name>
+<servlet>
+  <servlet-name>signup</servlet-name>
+  <servlet-class>com.busticket.User</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name>signup</servlet-name>
+  <url-pattern>/User</url-pattern>
+ </servlet-mapping> 
+ 
+ <servlet>
+  <servlet-name>merchant_feature</servlet-name>
+  <servlet-class>com.busticket.Merchant</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name>merchant_feature</servlet-name>
+  <url-pattern>/Merchant</url-pattern>
+ </servlet-mapping> 
+ 
+ <servlet>
+  <servlet-name>connect_feature</servlet-name>
+  <servlet-class>com.busticket.ConnectClass</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name>connect_feature</servlet-name>
+  <url-pattern>/Connect</url-pattern>
+ </servlet-mapping>  
+  
+</web-app>

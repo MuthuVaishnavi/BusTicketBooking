@@ -23,6 +23,7 @@ public class Bus {
 			row.addColumn(new Column("stopno", i+1));
 			row.addColumn(new Column("stop", stops[i]));
 			timeValue=new Time(formatter.parse(time[i]).getTime());
+			// enter the time as HH:mm:ss and in database the datatype for time is time without timezone not timestamp
 			row.addColumn(new Column("timedata", timeValue));
 			r1=new DbConnectivity().insertRow(row);
 		}

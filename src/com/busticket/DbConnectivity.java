@@ -11,10 +11,11 @@ import java.util.ArrayList;
 public class DbConnectivity {
 
 	public int insertRow(Row row) throws SQLException {
-		String jdbcURL="jdbc:postgresql://localhost:5432/busticketbooking";
-		String username="postgres";
-		String password1="Vaishu123*";
+		String jdbcURL="jdbc:postgresql://localhost:5433/busticketbooking";
+		String username="root";
+		String password1="postgres";
 		int r=0,len=0;
+		System.out.println(row.getTableName());
 		Connection connection = null;
 		try
 		{
@@ -45,7 +46,7 @@ public class DbConnectivity {
 			{
 				statement.setObject(i+1, row.columns.get(i).getValue());	
 			}
-			//System.out.println(statement);
+			System.out.println(statement);
 			r=statement.executeUpdate();
 			
 		}
@@ -62,9 +63,9 @@ public class DbConnectivity {
 	}
 	public ResultSet select(String table, String[] columns, Criteria c) throws SQLException
 	{
-		String jdbcURL="jdbc:postgresql://localhost:5432/busticketbooking";
-		String username="postgres";
-		String password1="Vaishu123*";
+		String jdbcURL="jdbc:postgresql://localhost:5433/busticketbooking";
+		String username="root";
+		String password1="postgres";
 		String result=null;
 		int len=0,len1=0;
 		ResultSet rs=null;
@@ -151,6 +152,12 @@ public class DbConnectivity {
 
 				}
 			}
+			
+			/*for(int i=0;i<len1;i++)
+			{
+				statement.setObject(i+1, c.value[i]);
+			}*/
+			
 
 			System.out.println(statement);
 			rs =statement.executeQuery();
@@ -169,9 +176,9 @@ public class DbConnectivity {
 	}
 	public int update(Row old,Row change) throws SQLException
 	{
-		String jdbcURL="jdbc:postgresql://localhost:5432/busticketbooking";
-		String username="postgres";
-		String password1="Vaishu123*";
+		String jdbcURL="jdbc:postgresql://localhost:5433/busticketbooking";
+		String username="root";
+		String password1="postgres";
 		int len1,len2,r=0;
 		len1=old.columns.size();
 		len2=change.columns.size();
