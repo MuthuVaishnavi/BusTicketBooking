@@ -56,6 +56,7 @@ public class User extends HttpServlet{
 	}
 	public void signIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException
 	{
+		System.out.println();
 		/*Row row1=new Row();
 		String[] s=new String[10];
 		row1.setTableName("accounts");
